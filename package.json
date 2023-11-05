@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.1.13",
+    "@supabase/ssr": "^0.0.9",
+    "@supabase/supabase-js": "^2.38.4",
     "framer-motion": "^10.16.4",
     "next": "^14.0.1",
     "next-auth": "^4.24.4",
