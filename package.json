@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/supabase-adapter": "^0.1.6",
     "@nextui-org/react": "^2.1.13",
-    "@supabase/ssr": "^0.0.9",
     "@supabase/supabase-js": "^2.38.4",
     "framer-motion": "^10.16.4",
-    "next": "^14.0.1",
-    "next-auth": "^4.24.4",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.292.0",
+    "next": "^13.4.0",
+    "next-auth": "4.22.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
