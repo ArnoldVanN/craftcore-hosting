@@ -1,6 +1,5 @@
 "use client"
 import "@/styles/globals.css"
-import { useSession } from "next-auth/react"
 import Link from "next/link"
 // import { Button } from "@nextui-org/react"
 import React, { useState } from "react"
@@ -17,7 +16,6 @@ const menuItems = [
 
 export default function Navbar() {
 	const [nav, setNav] = useState(false)
-	const { data: session } = useSession()
 
 	const handleNav = () => {
 		setNav(!nav)

@@ -1,16 +1,23 @@
+import { createServerClient } from "@supabase/ssr"
+import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { getCurrentUser } from "@/lib/session"
-import { authOptions } from "@/lib/auth"
 
-export const metadata = {
-	title: "Dashboard",
-}
+export default async function Page() {
+	const cookieStore = cookies()
 
-export default async function DashboardPage() {
-	const user = await getCurrentUser()
+	const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
+		cookies: {
+			get(name) {
+				return cookieStore.get(name)?.value
+			},
+		},
+	})
+	// const { data, error } = await supabase.auth.getSession()
 
-	if (!user) {
-		redirect(authOptions?.pages?.signIn || "/login")
+	const { data, error } = await supabase.from("public").select()
+	console.log(data)
+	if (!data) {
+		redirect("/login")
 	}
 
 	return <div>DashboardPage</div>

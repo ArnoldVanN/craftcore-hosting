@@ -1,25 +1,17 @@
-"use client"
-import React, { useState } from "react"
-import { useSearchParams } from "next/navigation"
-import { signIn, getProviders } from "next-auth/react"
+import { createClient } from "@/utils/supabase/server"
+import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 
-import { Icons } from "@/components/icons"
+import SignIn from "src/components/Auth/SignIn"
 
-export default function LoginPage() {
-	const [isGitHubLoading, setIsGitHubLoading] = useState(false)
-	const searchParams = useSearchParams()
+export default async function SignInPage() {
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+	const { data } = await supabase.auth.getSession()
 
-	return (
-		<button
-			type="button"
-			onClick={() => {
-				setIsGitHubLoading(true)
-				signIn("github", {
-					callbackUrl: searchParams?.get("from") || "/dashboard",
-				})
-			}}
-			disabled={isGitHubLoading}>
-			{isGitHubLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.gitHub className="mr-2 h-4 w-4" />} Github
-		</button>
-	)
+	if (data?.session) {
+		redirect("/")
+	}
+
+	return <SignIn />
 }
