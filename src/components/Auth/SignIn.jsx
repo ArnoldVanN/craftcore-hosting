@@ -12,7 +12,7 @@ export default function SignIn() {
 		const { error } = await supabase.auth.signInWithOAuth({
 			provider: "github",
 			options: {
-				redirectTo: `${process.env.LOCAL_URL}/welcome`,
+				redirectTo: `${process.env.NEXT_PUBLIC_LOCAL_URL}/auth/callback`,
 			},
 		})
 

@@ -12,11 +12,10 @@ export default async function Page() {
 			},
 		},
 	})
-	// const { data, error } = await supabase.auth.getSession()
 
-	const { data, error } = await supabase.from("public").select()
+	const { data, error } = await supabase.auth.getSession()
 	console.log(data)
-	if (!data) {
+	if (!data.session) {
 		redirect("/login")
 	}
 

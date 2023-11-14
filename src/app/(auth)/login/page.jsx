@@ -2,7 +2,8 @@ import { createClient } from "@/utils/supabase/server"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
-import SignIn from "src/components/Auth/SignIn"
+// import SignIn from "src/components/Auth/SignIn"
+import AuthButtons from "@/components/Auth/AuthButtons"
 
 export default async function SignInPage() {
 	const cookieStore = cookies()
@@ -10,8 +11,8 @@ export default async function SignInPage() {
 	const { data } = await supabase.auth.getSession()
 
 	if (data?.session) {
-		redirect("/")
+		return <AuthButtons />
 	}
 
-	return <SignIn />
+	return <AuthButtons />
 }
