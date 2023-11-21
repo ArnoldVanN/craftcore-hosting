@@ -59,9 +59,9 @@ export async function middleware(request) {
     return response
 }
 
-// export const config = {
-//     matcher: ['/dashboard:path*'],
-// };
+export const config = {
+    matcher: ['/dashboard:path*'],
+};
 
 // import { getToken } from "next-auth/jwt"
 // import { withAuth } from "next-auth/middleware"
