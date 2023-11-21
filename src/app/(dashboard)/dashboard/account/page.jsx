@@ -1,4 +1,6 @@
-import { auth } from "auth"
+import { createClient } from "@/utils/supabase/server"
+import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 
 export const metadata = {
 	title: "Account",
@@ -6,12 +8,16 @@ export const metadata = {
 }
 
 export default async function Account() {
-	const session = await auth()
-	if (!session) {
-		signIn()
-	} else {
-		return <div>{session.user.name}</div>
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
+
+	const {
+		data: { user },
+	} = await supabase.auth.getUser()
+
+	if (!user) {
+		redirect("/login")
 	}
 
-	// return <pre>{JSON.stringify(session, null, 2)}</pre>
+	return <div>{user.user_metadata.name}'s account settings</div>
 }

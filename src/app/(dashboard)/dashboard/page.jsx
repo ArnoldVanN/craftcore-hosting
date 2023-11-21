@@ -1,17 +1,21 @@
+import { createClient } from "@/utils/supabase/server"
+// import { createServerClient } from "@supabase/ssr"
+import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { getCurrentUser } from "@/lib/session"
-import { authOptions } from "@/lib/auth"
 
-export const metadata = {
-	title: "Dashboard",
-}
+export default async function Dashboard() {
+	const cookieStore = cookies()
+	const supabase = createClient(cookieStore)
 
-export default async function DashboardPage() {
-	const user = await getCurrentUser()
+	const {
+		data: { user },
+	} = await supabase.auth.getUser()
+
+	console.log(user)
 
 	if (!user) {
-		redirect(authOptions?.pages?.signIn || "/login")
+		redirect("/login")
 	}
 
-	return <div>DashboardPage</div>
+	return <div>Welcome, {user.user_metadata.name}</div>
 }
