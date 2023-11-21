@@ -1,7 +1,5 @@
 import Image from "next/image"
-
 import MainLinkToPlans from "./MainLinkToPlans"
-
 import beginnerUserIcon from "@/images/beginner_user_icon.png"
 import advancedUserIcon from "@/images/advanced_user_icon.png"
 

@@ -1,14 +1,13 @@
 "use client"
-
 import { useState } from "react"
 import { createClient } from "@/utils/supabase/client"
-import Link from "next/link"
 
 export default function SignIn() {
 	const supabase = createClient()
 	const [errorMsg, setErrorMsg] = useState(null)
 
-	async function signIn() {
+	const signIn = async () => {
+		"use server"
 		const { error } = await supabase.auth.signInWithOAuth({
 			provider: "github",
 			options: {
@@ -23,7 +22,9 @@ export default function SignIn() {
 
 	return (
 		<div>
-			<button onClick={signIn}>Sign In</button>
+			<form action={signIn}>
+				<button onClick={signIn}>Sign In</button>
+			</form>
 			<div className="card">{errorMsg && <div className="text-red-600">{errorMsg}</div>}</div>
 		</div>
 	)

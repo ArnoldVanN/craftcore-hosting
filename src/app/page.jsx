@@ -1,6 +1,6 @@
-import MainHeader from "@/components/root/MainHeader"
-import MainFeatures from "@/components/root/MainFeatures"
-import MainPlansSection from "@/components/root/MainPlansSection"
+import MainHeader from "@/components/Root/MainHeader"
+import MainFeatures from "@/components/Root/MainFeatures"
+import MainPlansSection from "@/components/Root/MainPlansSection"
 
 const features = [
 	{

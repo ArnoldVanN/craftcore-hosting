@@ -1,11 +1,8 @@
 "use client"
 import "@/styles/globals.css"
 import Link from "next/link"
-// import { Button } from "@nextui-org/react"
 import React, { useState } from "react"
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
-// import { signIn } from "next-auth/react"
-// import { useRouter } from "next/navigation"
 
 const menuItems = [
 	{ text: "Plans", href: "/plans" },
@@ -20,10 +17,6 @@ export default function Navbar() {
 	const handleNav = () => {
 		setNav(!nav)
 	}
-
-	// const handleSignIn = () => {
-	// 	signIn(undefined)
-	// }
 
 	return (
 		<>
@@ -43,17 +36,6 @@ export default function Navbar() {
 								</Link>
 							</li>
 						))}
-						{/* <li className="flex h-full items-center justify-center whitespace-nowrap">
-							{session ? (
-								<Link href="/account" className="flex h-12 items-center justify-center rounded-lg p-2 text-lg hover:bg-gray-700">
-									{session.user.name}'s Account
-								</Link>
-							) : (
-								<Button variant="solid" radius="md" size="lg" onClick={handleSignIn} className="flex h-12 w-32 items-center justify-center rounded-lg p-2 text-lg hover:bg-gray-700">
-									Sign In
-								</Button>
-							)}
-						</li> */}
 					</div>
 				</ul>
 				{/* Mobile Button */}
@@ -75,22 +57,6 @@ export default function Navbar() {
 								</Link>
 							</li>
 						))}
-						{/* <li className="pb-4">
-							{session ? (
-								<Link href="/account" className="flex h-12 w-32 items-center justify-center rounded-lg border-2 border-gray-800 p-2 text-lg shadow-[0px_1px_10px_0px_rgba(31,41,55,1)] hover:bg-gray-700">
-									{session.user.name}'s Account
-								</Link>
-							) : (
-								<Button
-									variant="solid"
-									radius="md"
-									size="lg"
-									onClick={handleSignIn}
-									className="flex h-12 w-32 items-center justify-center rounded-lg border-2 border-gray-800 p-2 text-lg shadow-[0px_1px_10px_0px_rgba(31,41,55,1)] hover:bg-gray-700">
-									Sign In
-								</Button>
-							)}
-						</li> */}
 					</ul>
 				</div>
 			</div>

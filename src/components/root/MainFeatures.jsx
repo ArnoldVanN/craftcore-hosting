@@ -1,7 +1,5 @@
 "use client"
-import React, { useState, useEffect } from "react"
 import { Card, CardHeader, CardBody, Divider } from "@nextui-org/react"
-
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules"
 import "swiper/css"
@@ -11,7 +9,6 @@ import "swiper/css/navigation"
 
 import styled from "styled-components"
 
-// Create a styled component for the Swiper with conditional styling
 const StyledSwiper = styled(Swiper)`
 	.swiper-button-prev,
 	.swiper-button-next {
