@@ -6,8 +6,7 @@ export default function SignIn() {
 	const supabase = createClient()
 	const [errorMsg, setErrorMsg] = useState(null)
 
-	const signIn = async () => {
-		"use server"
+	async function signIn() {
 		const { error } = await supabase.auth.signInWithOAuth({
 			provider: "github",
 			options: {
@@ -22,9 +21,8 @@ export default function SignIn() {
 
 	return (
 		<div>
-			<form action={signIn}>
-				<button onClick={signIn}>Sign In</button>
-			</form>
+			<button onClick={signIn}>Sign In</button>
+
 			<div className="card">{errorMsg && <div className="text-red-600">{errorMsg}</div>}</div>
 		</div>
 	)

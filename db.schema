@@ -1,0 +1,117 @@
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT USAGE ON SCHEMA public TO service_role;
+
+CREATE TABLE public.users (
+  id uuid references auth.users on delete cascade not null,
+  email text unique,
+  full_name text,
+  preferred_username text,
+  avatar_url text,
+
+  CONSTRAINT users_pk PRIMARY KEY (id)
+);
+
+GRANT ALL ON TABLE public.users TO postgres;
+GRANT ALL ON TABLE public.users TO service_role;
+
+-- SETTING UP RLS FOR USERS
+alter table public.users enable row level security;
+
+create policy "Users can view own account." on public.users
+  for select
+  to authenticated
+  using ( auth.uid() = id );
+
+create policy "Users can update own account." on public.users
+  for update
+  to authenticated
+  using ( auth.uid() = id );
+
+-- CREATING TRIGGER AND FUNCTION FOR HANDLING NEW USERS ON auth.users
+create function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.users (id, email, full_name, preferred_username, avatar_url)
+  values (new.id, new.email, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'preferred_username', new.raw_user_meta_data->>'avatar_url');
+  return new;
+end;
+$$ language plpgsql security definer;
+
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
+
+CREATE TABLE plans (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  plan_name text,
+  storage_size int,
+  memory_size int,
+  price int,
+  is_custom_plan boolean,
+  CONSTRAINT plans_pkey PRIMARY KEY (id)
+);
+
+GRANT ALL ON TABLE public.plans TO postgres;
+GRANT ALL ON TABLE public.plans TO service_role;
+
+-- SETTING UP RLS FOR PLANS
+alter table public.plans enable row level security;
+
+create policy "Plans are viewable by everyone." on public.plans
+  for select
+  to anon
+  using (true);
+
+CREATE TABLE servers (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  user_id uuid references auth.users(id) on delete cascade,
+  plan_id uuid references plans(id),
+  server_name text,
+  server_ip text,
+  server_port int,
+  CONSTRAINT servers_pkey PRIMARY KEY (id),
+  CONSTRAINT ip_unique UNIQUE (server_ip)
+);
+
+GRANT ALL ON TABLE public.servers TO postgres;
+GRANT ALL ON TABLE public.servers TO service_role;
+
+-- SETTING UP RLS FOR SERVERS
+alter table public.servers enable row level security;
+
+create policy "User can see their own servers only." on public.servers
+  for select
+  to authenticated
+  using ( auth.uid() = user_id );
+
+create policy "Users can insert their own server." on public.servers
+  for insert
+  to authenticated
+  with check ( auth.uid() = user_id );
+
+create policy "Users can update own server." on public.servers
+  for update
+  to authenticated
+  using ( auth.uid() = user_id );
+
+CREATE TABLE order_history (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  user_id uuid references users(id) not null,
+  server_id uuid references servers(id),
+  order_date timestamp with time zone default timezone('utc'::text, now()) not null,
+  total_amount decimal(10, 2),
+  billing_cycle varchar(20),
+  renewal_date timestamp with time zone,
+  CONSTRAINT order_pkey PRIMARY KEY (id)
+);
+
+GRANT ALL ON TABLE public.order_history TO postgres;
+GRANT ALL ON TABLE public.order_history TO service_role;
+
+-- SETTING UP RLS FOR ORDER HISTORY
+alter table public.order_history enable row level security;
+
+create policy "User can see their own order history only." on public.order_history
+  for select
+  to authenticated
+  using ( auth.uid() = user_id );

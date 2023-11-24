@@ -17,5 +17,5 @@ export async function GET(request) {
   }
 
   // URL to redirect to after sign in process completes
-  return NextResponse.redirect('/auth/auth-code-error')
+  return NextResponse.redirect(process.env.LOCAL_URL)
 }
