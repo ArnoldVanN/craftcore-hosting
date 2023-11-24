@@ -5,7 +5,8 @@
 			"@/*": ["./src/*"],
 			"@/styles": ["/src/styles/*"],
 			"@/components": ["/src/components/*"],
-			"@/images*": ["/public/*"]
+			"@/images*": ["/public/*"],
+			"@/lib": ["src/lib/auth.js"]
 		}
 	}
 }

@@ -6,6 +6,7 @@ export default function MainHeader() {
 		<>
 			<div className="relative z-40 flex h-[32rem] w-full items-center justify-center border-b-3 border-gray-900 text-center shadow-lg shadow-[#02070f]">
 				<Image
+					alt="Header Image"
 					src={headerImage}
 					fill
 					priority={true}
