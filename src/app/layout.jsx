@@ -1,12 +1,10 @@
 import "@/styles/globals.css"
 import Navbar from "@/components/Navbar"
 import Providers from "@/app/providers"
-import { createClient } from "@/utils/supabase/server"
-import { cookies } from "next/headers"
-
+import createSupabaseServerClient from "@/utils/supabase/server"
 export const metadata = {
 	title: "Home",
-	description: "GetFooked Hosting Home",
+	description: "CraftCore Hosting Home",
 }
 
 export const viewport = {
@@ -17,13 +15,16 @@ export const viewport = {
 }
 
 export default async function RootLayout({ children }) {
-	const cookieStore = cookies()
-	const supabase = createClient(cookieStore)
+	const supabase = await createSupabaseServerClient()
 
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
-	console.log(user)
+
+	if (user) {
+		console.log("User: " + user.user_metadata.user_name + " has successfully logged in.")
+	}
+
 	return (
 		<html lang="en">
 			<body className="h-screen w-screen overflow-x-hidden">

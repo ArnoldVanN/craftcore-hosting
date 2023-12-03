@@ -25,7 +25,7 @@ export default function MainPlansLink() {
 				</div>
 
 				<div className="p-4 text-sm font-semibold sm:text-lg">
-					<p>GetFooked Hosting is the choice for you! We offer dependable servers with an intuitive control panel at a competitive price!</p>
+					<p>CraftCore Hosting is the choice for you! We offer dependable servers with an intuitive control panel at a competitive price!</p>
 				</div>
 				<MainLinkToPlans />
 			</div>
