@@ -1,12 +1,10 @@
-import { Button } from "@nextui-org/react"
-import logout from "@/components/Auth/actions"
+import logOut from "@/app/(auth)/login/_actions/log-out-action"
 import ActionsSubmitButton from "@/components/ActionsSubmitButton"
 
 export default function SignOut() {
 	return (
-		<form action={logout}>
+		<form action={logOut}>
 			<ActionsSubmitButton>Sign Out</ActionsSubmitButton>
-			{/* <Button type="submit">SignOut</Button> */}
 		</form>
 	)
 }

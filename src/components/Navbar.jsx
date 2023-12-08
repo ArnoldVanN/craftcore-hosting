@@ -5,7 +5,7 @@ import React, { useState } from "react"
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
 import Conditional from "@/components/Conditional"
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, cn } from "@nextui-org/react"
-import SignOut from "@/components/Auth/SignOut"
+import SignOut from "@/app/(auth)/login/components/SignOut"
 
 const menuItems = [
 	{ text: "Plans", href: "/plans" },
@@ -45,14 +45,14 @@ export default function Navbar({ user }) {
 									<DropdownTrigger>
 										<Button className="flex h-12 w-32 items-center justify-center rounded-3xl bg-[#000712] p-2 text-lg text-white hover:bg-gray-700">{user?.user_metadata.name}</Button>
 									</DropdownTrigger>
-									<DropdownMenu aria-label="Static Actions" closeOnSelect={false} className="text-black">
+									<DropdownMenu aria-label="Static Actions" className="text-black">
 										<DropdownItem key="account">
 											<Link href="/dashboard/account">{user?.user_metadata.name}'s Account</Link>
 										</DropdownItem>
 										<DropdownItem key="settings">
 											<Link href="/dashboard/account">Settings</Link>
 										</DropdownItem>
-										<DropdownItem key="sign-out">
+										<DropdownItem key="sign-out" closeOnSelect={false}>
 											<SignOut />
 										</DropdownItem>
 									</DropdownMenu>

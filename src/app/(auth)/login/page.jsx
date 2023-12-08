@@ -1,6 +1,7 @@
 import createSupabaseServerClient from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
-import SignIn from "@/components/Auth/SignIn"
+import SignIn from "@/app/(auth)/login/components/SignIn"
+import SignOut from "@/app/(auth)/login/components/SignOut"
 
 export default async function SignInPage() {
 	const supabase = await createSupabaseServerClient()
@@ -20,9 +21,7 @@ export default async function SignInPage() {
 	return user ? (
 		<div className="flex items-center gap-4 bg-red-600">
 			Hey, {user.email}!
-			<form action={signOut}>
-				<button className="bg-btn-background hover:bg-btn-background-hover rounded-md bg-red-800 px-4 py-2 no-underline">Logout</button>
-			</form>
+			<SignOut />
 		</div>
 	) : (
 		<SignIn />

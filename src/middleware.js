@@ -27,11 +27,6 @@ export async function middleware(request) {
                             headers: request.headers,
                         },
                     })
-                    response.cookies.set({
-                        name,
-                        value,
-                        ...options,
-                    })
                 },
                 remove(name, options) {
                     request.cookies.set({
@@ -43,11 +38,6 @@ export async function middleware(request) {
                         request: {
                             headers: request.headers,
                         },
-                    })
-                    response.cookies.set({
-                        name,
-                        value: '',
-                        ...options,
                     })
                 },
             },
