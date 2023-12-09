@@ -30,8 +30,8 @@ export default async function RootLayout({ children }) {
 			<body className="h-screen w-screen overflow-x-hidden">
 				<Providers>
 					<Navbar user={user} />
-					<div className="pt-24">
-						<main className="bg-black">{children}</main>
+					<div className="h-screen pt-24">
+						<main className="h-full bg-black">{children}</main>
 					</div>
 				</Providers>
 			</body>
