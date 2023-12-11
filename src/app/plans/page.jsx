@@ -1,4 +1,4 @@
-import PlansList from "@/components/Plans/PlansList"
+import PlansList from "@/app/plans/PlansList"
 
 async function getPlans() {
 	const apiUrl = `${process.env.LOCAL_URL}/api/plans`

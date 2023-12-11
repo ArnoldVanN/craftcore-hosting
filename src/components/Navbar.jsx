@@ -4,6 +4,8 @@ import Link from "next/link"
 import React, { useState } from "react"
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
 import Conditional from "@/components/Conditional"
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, cn } from "@nextui-org/react"
+import SignOut from "@/app/(auth)/login/components/LogOut"
 
 const menuItems = [
 	{ text: "Plans", href: "/plans" },
@@ -25,7 +27,7 @@ export default function Navbar({ user }) {
 				{/* Main Navbar */}
 				<div className="flex h-1/2 items-center justify-center pl-8 sm:h-2/3">
 					<Link href="/" className="flex h-full flex-1 items-center justify-center rounded-lg hover:bg-gray-700">
-						<h1 className="text-md flex h-full items-center justify-center px-4 font-semibold md:text-lg">GetFooked Hosting</h1>
+						<h1 className="text-md flex h-full items-center justify-center px-4 font-semibold md:text-lg">CraftCore Hosting</h1>
 					</Link>
 				</div>
 				<ul className="hidden h-2/3 w-3/4 items-center justify-end lg:flex lg:flex-1">
@@ -39,8 +41,28 @@ export default function Navbar({ user }) {
 						))}
 						<Conditional showWhen={user}>
 							<li className="flex h-full items-center justify-center sm:w-1/6 md:w-1/4">
-								<Link href="/dashboard/account" className="flex h-12 w-32 items-center justify-center rounded-3xl p-2 text-lg hover:bg-gray-700">
-									{user?.user_metadata.name}
+								<Dropdown>
+									<DropdownTrigger>
+										<Button className="flex h-12 w-32 items-center justify-center rounded-3xl bg-[#000712] p-2 text-lg text-white hover:bg-gray-700">{user?.user_metadata.name}</Button>
+									</DropdownTrigger>
+									<DropdownMenu aria-label="Static Actions" className="text-black">
+										<DropdownItem key="account">
+											<Link href="/dashboard/account">{user?.user_metadata.name}'s Account</Link>
+										</DropdownItem>
+										<DropdownItem key="settings">
+											<Link href="/dashboard/account">Settings</Link>
+										</DropdownItem>
+										<DropdownItem key="sign-out" closeOnSelect={false}>
+											<SignOut />
+										</DropdownItem>
+									</DropdownMenu>
+								</Dropdown>
+							</li>
+						</Conditional>
+						<Conditional showWhen={!user}>
+							<li className="flex h-full items-center justify-center sm:w-1/6 md:w-1/4">
+								<Link href="/login" className="flex h-12 w-32 items-center justify-center rounded-3xl p-2 text-lg hover:bg-gray-700">
+									Log In
 								</Link>
 							</li>
 						</Conditional>
@@ -66,11 +88,31 @@ export default function Navbar({ user }) {
 							</li>
 						))}
 						<Conditional showWhen={user}>
+							<li className="pb-4 ">
+								<Dropdown>
+									<DropdownTrigger>
+										<Button className="flex h-12 w-32 items-center justify-center rounded-3xl border-2 border-gray-800 bg-gray-900 p-2 text-lg text-white shadow-[0px_1px_10px_0px_rgba(31,41,55,1)] hover:bg-gray-700">
+											{user?.user_metadata.name}
+										</Button>
+									</DropdownTrigger>
+									<DropdownMenu aria-label="Static Actions" className="text-black">
+										<DropdownItem key="account">
+											<Link href="/dashboard/account">{user?.user_metadata.name}'s Account</Link>
+										</DropdownItem>
+										<DropdownItem key="settings">
+											<Link href="/dashboard/account">Settings</Link>
+										</DropdownItem>
+										<DropdownItem key="sign-out" closeOnSelect={false}>
+											<SignOut />
+										</DropdownItem>
+									</DropdownMenu>
+								</Dropdown>
+							</li>
+						</Conditional>
+						<Conditional showWhen={!user}>
 							<li className="pb-4">
-								<Link
-									href="/dashboard/account"
-									className="flex h-12 w-32 items-center justify-center rounded-3xl border-2 border-gray-800 p-2 text-lg shadow-[0px_1px_10px_0px_rgba(31,41,55,1)] hover:bg-gray-700">
-									{user?.user_metadata.name}
+								<Link href="/login" className="flex h-12 w-32 items-center justify-center rounded-3xl border-2 border-gray-800 p-2 text-lg shadow-[0px_1px_10px_0px_rgba(31,41,55,1)] hover:bg-gray-700">
+									Log In
 								</Link>
 							</li>
 						</Conditional>

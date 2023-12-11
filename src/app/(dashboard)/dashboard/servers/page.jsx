@@ -1,15 +1,13 @@
-import { createClient } from "@/utils/supabase/server"
-import { cookies } from "next/headers"
+import createSupabaseServerClient from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
 
 export const metadata = {
 	title: "Servers",
-	description: "View owned GetFooked Hosting server packages.",
+	description: "View owned CraftCore Hosting server packages.",
 }
 
 export default async function Servers() {
-	const cookieStore = cookies()
-	const supabase = createClient(cookieStore)
+	const supabase = await createSupabaseServerClient()
 
 	const {
 		data: { user },

@@ -1,16 +1,12 @@
-import { createClient } from "@/utils/supabase/server"
-import { cookies } from "next/headers"
+import createSupabaseServerClient from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
 
 export default async function Dashboard() {
-	const cookieStore = cookies()
-	const supabase = createClient(cookieStore)
+	const supabase = await createSupabaseServerClient()
 
 	const {
 		data: { user },
 	} = await supabase.auth.getUser()
-
-	console.log(user)
 
 	if (!user) {
 		redirect("/login")
