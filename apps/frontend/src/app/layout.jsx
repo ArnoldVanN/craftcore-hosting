@@ -26,6 +26,8 @@ export default async function RootLayout({ children }) {
 		console.log("User: " + user.user_metadata.user_name + " has successfully logged in.")
 	}
 
+	// for nextui dark mode, add className="dark" to `html`
+
 	return (
 		<html lang="en">
 			<body className="h-screen w-screen overflow-x-hidden">
