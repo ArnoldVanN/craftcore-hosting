@@ -1,34 +1,17 @@
 {
   "name": "craftcore-hosting",
-  "version": "0.1.0",
   "private": true,
+  "version": "1.0.0",
+  "description": "",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@auth/supabase-adapter": "^0.1.6",
-    "@nextui-org/react": "^2.1.13",
-    "@supabase/ssr": "^0.0.10",
-    "framer-motion": "^10.16.4",
-    "jsonwebtoken": "^9.0.2",
-    "lucide-react": "^0.292.0",
-    "next": "^14.0.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.11.0",
-    "styled-components": "^6.1.0",
-    "swiper": "^10.3.1"
+    "build": "turbo build",
+    "start": "turbo start",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{js,jsx,md}\""
   },
   "devDependencies": {
-    "autoprefixer": "latest",
-    "eslint": "latest",
-    "eslint-config-next": "^14.0.3",
-    "postcss": "latest",
-    "prettier": "^3.0.3",
-    "prettier-plugin-tailwindcss": "^0.5.6",
-    "tailwindcss": "latest"
+    "prettier": "^3.1.0",
+    "turbo": "^1.11.2"
   }
 }
