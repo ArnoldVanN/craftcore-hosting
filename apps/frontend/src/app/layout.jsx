@@ -23,7 +23,7 @@ export default async function RootLayout({ children }) {
 	} = await supabase.auth.getUser()
 
 	if (user) {
-		console.log("User: " + user.user_metadata.user_name + " has successfully logged in.")
+		console.log("User: " + user.user_metadata.preferred_username + " has successfully logged in.")
 	}
 
 	// for nextui dark mode, add className="dark" to `html`

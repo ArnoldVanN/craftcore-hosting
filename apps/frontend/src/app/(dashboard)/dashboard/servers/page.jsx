@@ -1,5 +1,6 @@
 import { createSupabaseServerClient } from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
+import ServerList from "./components/ServerList"
 
 export const metadata = {
 	title: "Servers",
@@ -17,5 +18,12 @@ export default async function Servers() {
 		redirect("/login")
 	}
 
-	return <div>{user.user_metadata.name}&apos;s Servers</div>
+	const { data } = await supabase.from("servers").select()
+
+	return (
+		<div className="container mx-auto">
+			<div>{user.user_metadata.preferred_username}&apos;s Servers</div>
+			<ServerList servers={data} />
+		</div>
+	)
 }

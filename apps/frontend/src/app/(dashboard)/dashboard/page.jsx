@@ -12,5 +12,5 @@ export default async function Dashboard() {
 		redirect("/login")
 	}
 
-	return <div>Welcome, {user.user_metadata.name}</div>
+	return <div>Welcome, {user.user_metadata.preferred_username}</div>
 }

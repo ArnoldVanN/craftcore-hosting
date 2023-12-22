@@ -17,5 +17,5 @@ export default async function Account() {
 		redirect("/login")
 	}
 
-	return <div>{user.user_metadata.name}&apos;s account settings</div>
+	return <div>{user.user_metadata.preferred_username}&apos;s account settings</div>
 }
