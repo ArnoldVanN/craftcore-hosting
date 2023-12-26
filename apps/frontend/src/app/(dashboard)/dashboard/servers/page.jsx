@@ -19,11 +19,17 @@ export default async function Servers() {
 	}
 
 	const { data } = await supabase.from("servers").select()
+	// Sanitize data
+	const sanitizedData = data.map(({ user_id, plan_id, ...rest }) => rest)
 
 	return (
-		<div className="container mx-auto">
-			<div>{user.user_metadata.preferred_username}&apos;s Servers</div>
-			<ServerList servers={data} />
+		<div className="h-full bg-cyan-900">
+			<div className="container mx-auto h-full">
+				<div>
+					<p className="py-4 text-3xl">{user.user_metadata.preferred_username}&apos;s Servers</p>
+				</div>
+				<ServerList servers={sanitizedData} />
+			</div>
 		</div>
 	)
 }

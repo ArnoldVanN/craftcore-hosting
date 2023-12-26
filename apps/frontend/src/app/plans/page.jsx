@@ -7,15 +7,14 @@ async function getPlans() {
 }
 
 export default async function Plans() {
-	const data = await getPlans()
-
+	const { data } = await getPlans()
 	return (
 		<>
 			<div className="p-4 text-center text-2xl">
 				<p>MINECRAFT SERVER HOSTING PLANS</p>
 				<p className="pt-4 text-medium">Looking to host a Minecraft server? Subscribe now and get a Minecraft server up and running within minutes!</p>
 			</div>
-			<PlansList plans={data.plans} />
+			<PlansList plans={data} />
 		</>
 	)
 }

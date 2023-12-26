@@ -1,15 +1,17 @@
 "use client"
-import { useCallback } from "react"
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tooltip } from "@nextui-org/react"
+import React from "react"
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Tooltip, Chip, getKeyValue } from "@nextui-org/react"
+import { Link } from "@nextui-org/react"
 import { EditIcon } from "./EditIcon"
 import { EyeIcon } from "./EyeIcon"
+import { redirect } from "next/navigation"
 
 const columns = [
-	{ name: "NAME", uid: "server_name" },
-	{ name: "IP", uid: "server_ip" },
-	{ name: "PORT", uid: "server_port" },
-	{ name: "STATUS", uid: "server_status" },
-	{ name: "ACTIONS", uid: "actions" },
+	{ label: "NAME", key: "server_name" },
+	{ label: "IP", key: "server_ip" },
+	{ label: "PORT", key: "server_port" },
+	{ label: "STATUS", key: "server_status" },
+	{ label: "ACTIONS", key: "actions" },
 ]
 
 const statusColorMap = {
@@ -19,13 +21,20 @@ const statusColorMap = {
 }
 
 export default function ServerList({ servers }) {
-	const renderCell = useCallback((server, columnKey) => {
+	// CUSTOM CELLS
+
+	const renderCell = React.useCallback((server, columnKey) => {
 		const cellValue = server[columnKey]
 
+		// value of columnKey is the `key` property of columns[]
 		switch (columnKey) {
-			case "name":
-				return <div>{cellValue}</div>
-			case "status":
+			case "server_name":
+				return (
+					<Link href={`/dashboard/servers/${server.id}`} underline="always" color="primary">
+						{cellValue}
+					</Link>
+				)
+			case "server_status":
 				return (
 					<Chip className="capitalize" color={statusColorMap[server.server_status]} size="sm" variant="flat">
 						{cellValue}
@@ -33,13 +42,13 @@ export default function ServerList({ servers }) {
 				)
 			case "actions":
 				return (
-					<div className="relative flex items-center gap-2">
-						<Tooltip content="Details">
+					<div className="relative flex items-center gap-2 text-black">
+						<Tooltip content="Details" className="text-black">
 							<span className="cursor-pointer text-lg text-default-400 active:opacity-50">
 								<EyeIcon />
 							</span>
 						</Tooltip>
-						<Tooltip content="Edit user">
+						<Tooltip content="Edit server" className="text-black">
 							<span className="cursor-pointer text-lg text-default-400 active:opacity-50">
 								<EditIcon />
 							</span>
@@ -52,11 +61,11 @@ export default function ServerList({ servers }) {
 	}, [])
 
 	return (
-		<Table aria-label="Example table with custom cells" className="text-black">
+		<Table aria-label="Your owned CraftCore servers" className="text-black">
 			<TableHeader columns={columns}>
 				{(column) => (
-					<TableColumn key={column.uid} align={column.uid === "actions" ? "center" : "start"}>
-						{column.name}
+					<TableColumn key={column.key} align={column.key === "actions" ? "center" : "start"}>
+						{column.label}
 					</TableColumn>
 				)}
 			</TableHeader>
