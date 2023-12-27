@@ -1,4 +1,4 @@
-import PlansList from "@/app/plans/PlansList"
+import PlansList from "@/app/(routes)/plans/PlansList"
 
 async function getPlans() {
 	const apiUrl = `${process.env.LOCAL_URL}/api/plans`
@@ -8,6 +8,7 @@ async function getPlans() {
 
 export default async function Plans() {
 	const { data } = await getPlans()
+
 	return (
 		<>
 			<div className="p-4 text-center text-2xl">

@@ -5,7 +5,7 @@ import React, { useState } from "react"
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
 import Conditional from "@/components/Conditional"
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, cn } from "@nextui-org/react"
-import SignOut from "@/app/(auth)/login/components/LogOut"
+import SignOut from "@/app/(routes)/(auth)/login/components/LogOut"
 
 const menuItems = [
 	{ text: "Plans", href: "/plans" },
