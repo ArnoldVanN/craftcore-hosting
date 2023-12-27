@@ -5,7 +5,7 @@ import React, { useState } from "react"
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"
 import Conditional from "@/components/Conditional"
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, cn } from "@nextui-org/react"
-import SignOut from "@/app/(auth)/login/components/LogOut"
+import SignOut from "@/app/(routes)/(auth)/login/components/LogOut"
 
 const menuItems = [
 	{ text: "Plans", href: "/plans" },
@@ -43,11 +43,11 @@ export default function Navbar({ user }) {
 							<li className="flex h-full items-center justify-center sm:w-1/6 md:w-1/4">
 								<Dropdown>
 									<DropdownTrigger>
-										<Button className="flex h-12 w-32 items-center justify-center rounded-3xl bg-[#000712] p-2 text-lg text-white hover:bg-gray-700">{user?.user_metadata.name}</Button>
+										<Button className="flex h-12 items-center justify-center rounded-3xl bg-[#000712] p-2 text-lg text-white hover:bg-gray-700">{user?.user_metadata.preferred_username}</Button>
 									</DropdownTrigger>
 									<DropdownMenu aria-label="Static Actions" className="text-black">
 										<DropdownItem key="account" textValue="Account">
-											<Link href="/dashboard/account">{user?.user_metadata.name}&apos;s Account</Link>
+											<Link href="/dashboard/account">{user?.user_metadata.preferred_username}&apos;s Account</Link>
 										</DropdownItem>
 										<DropdownItem key="settings" textValue="Account settings">
 											<Link href="/dashboard/account">Settings</Link>
@@ -76,13 +76,13 @@ export default function Navbar({ user }) {
 				<div
 					className={
 						nav
-							? "border-l-3 absolute right-0 top-0 flex h-screen w-2/5 items-center justify-center border-gray-800 bg-gray-900 shadow-[-1px_0px_10px_0px_rgba(50,60,77,1)] duration-300 ease-in lg:hidden"
-							: "border-l-3 absolute right-[-50%] top-0 flex h-screen w-2/5 items-center justify-center border-gray-800 bg-gray-900 shadow-[-1px_0px_10px_0px_rgba(50,60,77,1)] duration-300 ease-in lg:hidden"
+							? "absolute right-0 top-0 flex h-screen w-2/5 items-center justify-center border-l-3 border-gray-800 bg-gray-900 shadow-[-1px_0px_10px_0px_rgba(17,24,39,1)] duration-300 ease-in lg:hidden"
+							: "absolute right-[-50%] top-0 flex h-screen w-2/5 items-center justify-center border-l-3 border-gray-800 bg-gray-900 shadow-[-1px_0px_10px_0px_rgba(17,24,39,1)] duration-300 ease-in lg:hidden"
 					}>
 					<ul>
 						{menuItems.map((item, index) => (
 							<li key={index} className="pb-4">
-								<Link href={item.href} className="flex h-12 w-32 items-center justify-center rounded-3xl border-2 border-gray-800 p-2 text-lg shadow-[0px_1px_10px_0px_rgba(31,41,55,1)] hover:bg-gray-700">
+								<Link href={item.href} className="flex h-12 content-center items-center justify-center rounded-3xl p-2 text-lg hover:bg-gray-700">
 									{item.text}
 								</Link>
 							</li>
@@ -91,13 +91,11 @@ export default function Navbar({ user }) {
 							<li className="pb-4 ">
 								<Dropdown>
 									<DropdownTrigger>
-										<Button className="flex h-12 w-32 items-center justify-center rounded-3xl border-2 border-gray-800 bg-gray-900 p-2 text-lg text-white shadow-[0px_1px_10px_0px_rgba(31,41,55,1)] hover:bg-gray-700">
-											{user?.user_metadata.name}
-										</Button>
+										<Button className="flex h-12 content-center items-center justify-center rounded-3xl bg-gray-900 p-2 text-lg text-white hover:bg-gray-700">{user?.user_metadata.preferred_username}</Button>
 									</DropdownTrigger>
 									<DropdownMenu aria-label="Static Actions" className="text-black">
 										<DropdownItem key="account">
-											<Link href="/dashboard/account">{user?.user_metadata.name}&apos;s Account</Link>
+											<Link href="/dashboard/account">{user?.user_metadata.preferred_username}&apos;s Account</Link>
 										</DropdownItem>
 										<DropdownItem key="settings">
 											<Link href="/dashboard/account">Settings</Link>

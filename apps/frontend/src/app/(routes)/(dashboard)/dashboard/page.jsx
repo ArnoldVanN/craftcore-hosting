@@ -1,12 +1,7 @@
 import { createSupabaseServerClient } from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
 
-export const metadata = {
-	title: "Account",
-	description: "View or edit your CraftCore Hosting account information.",
-}
-
-export default async function Account() {
+export default async function Dashboard() {
 	const supabase = await createSupabaseServerClient()
 
 	const {
@@ -17,5 +12,5 @@ export default async function Account() {
 		redirect("/login")
 	}
 
-	return <div>{user.user_metadata.name}&apos;s account settings</div>
+	return <div>Welcome, {user.user_metadata.preferred_username}</div>
 }

@@ -21,6 +21,12 @@ importers:
         specifier: ^4.18.2
         version: 4.18.2
 
+  apps/api:
+    dependencies:
+      express:
+        specifier: ^4.18.2
+        version: 4.18.2
+
   apps/frontend:
     dependencies:
       '@auth/supabase-adapter':
