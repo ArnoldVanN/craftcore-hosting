@@ -7,7 +7,7 @@ export default async function page({ params }) {
 	console.log(data)
 	return (
 		<div className="container">
-			<p>Server: {params.id}</p>
+			<p>Server: {data[0].server_name}</p>
 		</div>
 	)
 }
