@@ -20,7 +20,7 @@ export default function PlansList({ plans }) {
 							<Image src={plan.icon_url} alt={plan.plan_name + "Icon"} width={66} height={66} />
 							<p>{plan.price}&euro;</p>
 							<p>{plan.memory_size}GB</p>
-							<p>{plan.storage_size !== null || "" ? plan.storage_size + "GB" : "Unlimited Storage"}</p>
+							<p>{!!plan.storage_size || "" ? plan.storage_size + "GB" : "Unlimited Storage"}</p>
 						</CardBody>
 					</Card>
 				))}

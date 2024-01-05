@@ -1,16 +1,18 @@
-"use client"
-import { createClient } from "@/utils/supabase/client"
-import { Button, Link } from "@nextui-org/react"
+import { createSupabaseServerClient } from "@/utils/supabase/server"
+import ActionsSubmitButton from "@/components/ActionsSubmitButton"
+import { purchaseServer } from "./actions"
 
 export default async function page({ params }) {
-	const supabase = await createClient()
+	const supabase = await createSupabaseServerClient()
 	const { data } = await supabase.from("plans").select().eq("id", params.planId)
+	const purchaseServerWithPlanId = purchaseServer.bind(null, params.planId)
+
 	return (
 		<div className="container mx-auto">
 			<p className="text-3xl"> {data[0].plan_name}</p>
-			<Button href="" as={Link}>
-				Purchase Server
-			</Button>
+			<form action={purchaseServerWithPlanId}>
+				<ActionsSubmitButton className="">Purchase server</ActionsSubmitButton>
+			</form>
 		</div>
 	)
 }

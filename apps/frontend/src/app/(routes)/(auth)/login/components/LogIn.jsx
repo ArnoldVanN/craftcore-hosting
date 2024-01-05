@@ -2,7 +2,7 @@ import ActionsSubmitButton from "@/components/ActionsSubmitButton"
 import { createSupabaseServerClient } from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
 
-export default async function SignIn({ children, className }) {
+export default async function LogIn({ children, className }) {
 	// This is the only way i could get sign in to work using server actions. Putting it in its own actions file doesnt work for some reason. Think its related to this https://github.com/supabase/auth-helpers/issues/580
 	const signIn = async () => {
 		"use server"

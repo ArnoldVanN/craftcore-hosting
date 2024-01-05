@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "prettier": "^3.1.0",
+    "eslint": "latest",
     "turbo": "^1.11.2"
   }
 }

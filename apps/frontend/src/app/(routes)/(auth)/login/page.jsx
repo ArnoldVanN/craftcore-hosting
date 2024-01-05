@@ -1,6 +1,6 @@
 import { createSupabaseServerClient } from "@/utils/supabase/server"
-import LogIn from "@/app/(auth)/login/components/LogIn"
-import LogOut from "@/app/(auth)/login/components/LogOut"
+import LogIn from "@/app/(routes)/(auth)/login/components/LogIn"
+import LogOut from "@/app/(routes)/(auth)/login/components/LogOut"
 import { Card, CardHeader, CardBody } from "@nextui-org/react"
 import Icon from "@/components/Icon"
 
