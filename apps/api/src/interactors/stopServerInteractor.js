@@ -1,9 +1,9 @@
-import { startServerPersistence } from '../persistence/startServerPersistence.js';
 import { getServerPersistence } from '../persistence/getServerPersistence.js';
 import { getNodePersistence } from '../persistence/getNodePersistence.js';
-import { startServerCommand } from '../commands/startServerCommand.js';
+import { stopServerPersistence } from '../persistence/stopServerPersistence.js';
+import { stopServerCommand } from '../commands/stopServerCommand.js';
 
-export const startServerInteractor = async ({
+export const stopServerInteractor = async ({
     serverId,
     req,
     res
@@ -13,11 +13,12 @@ export const startServerInteractor = async ({
 
         const node = await getNodePersistence({ nodeId: server.node_id, });
 
-        await startServerCommand({ serverId: server.id, node });
+        await stopServerCommand({ serverId: server.id, node });
 
-        await startServerPersistence({ req, serverId });
+        await stopServerPersistence({ req, serverId });
     } catch (error) {
         console.error(error)
         throw new Error()
     }
+
 };

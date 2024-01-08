@@ -1,6 +1,7 @@
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT USAGE ON SCHEMA public TO service_role;
 
+-- CREATE USERS TABLE
 CREATE TABLE public.users (
   id uuid references auth.users on delete cascade not null,
   email text unique,
@@ -10,6 +11,10 @@ CREATE TABLE public.users (
 
   CONSTRAINT users_pk PRIMARY KEY (id)
 );
+
+create index useremail
+on public.users
+using btree (email);
 
 GRANT ALL ON TABLE public.users TO postgres;
 GRANT ALL ON TABLE public.users TO service_role;
@@ -41,13 +46,15 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
 
+-- CREATE PLANS TABLE
 CREATE TABLE plans (
   id uuid NOT NULL DEFAULT uuid_generate_v4(),
   plan_name text,
   storage_size int,
   memory_size int,
   price int,
-  is_custom_plan boolean,
+  icon_url text,
+
   CONSTRAINT plans_pkey PRIMARY KEY (id)
 );
 
@@ -59,19 +66,51 @@ alter table public.plans enable row level security;
 
 create policy "Plans are viewable by everyone." on public.plans
   for select
-  to anon
+  to anon, authenticated
   using (true);
 
+-- CREATE NODES TABLE
+CREATE TABLE public.nodes (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  ip text,
+  total_memory int not null,
+  free_memory int not null,
+
+  CONSTRAINT nodes_pk PRIMARY KEY (id)
+);
+
+create index freememory
+on public.nodes
+using btree (free_memory);
+
+GRANT ALL ON TABLE public.nodes TO postgres;
+GRANT ALL ON TABLE public.nodes TO service_role;
+
+-- SETTING UP RLS FOR NODES
+alter table public.nodes enable row level security;
+
+create policy "No one can access nodes." on public.nodes
+  for select
+  to admin_role;
+
+-- CREATE SERVERS TABLE
 CREATE TABLE servers (
   id uuid NOT NULL DEFAULT uuid_generate_v4(),
-  user_id uuid references auth.users(id) on delete cascade,
-  plan_id uuid references plans(id),
+  user_id uuid references auth.users(id) on delete restrict on update cascade,
+  plan_id uuid references plans(id) on delete restrict on update cascade,
+  node_id uuid references nodes(id) on delete restrict on update cascade,
   server_name text,
   server_ip text,
   server_port int,
+  version text,
+
   CONSTRAINT servers_pkey PRIMARY KEY (id),
   CONSTRAINT ip_unique UNIQUE (server_ip)
 );
+
+create index planid
+on public.servers
+using btree (plan_id);
 
 GRANT ALL ON TABLE public.servers TO postgres;
 GRANT ALL ON TABLE public.servers TO service_role;
@@ -94,6 +133,7 @@ create policy "Users can update own server." on public.servers
   to authenticated
   using ( auth.uid() = user_id );
 
+-- CREATE ORDER HISTORY TABLE
 CREATE TABLE order_history (
   id uuid NOT NULL DEFAULT uuid_generate_v4(),
   user_id uuid references users(id) not null,
@@ -102,6 +142,7 @@ CREATE TABLE order_history (
   total_amount decimal(10, 2),
   billing_cycle varchar(20),
   renewal_date timestamp with time zone,
+
   CONSTRAINT order_pkey PRIMARY KEY (id)
 );
 
@@ -115,3 +156,8 @@ create policy "User can see their own order history only." on public.order_histo
   for select
   to authenticated
   using ( auth.uid() = user_id );
+
+-- CREATE THE SUPABASE ROLE AND GRANT BYPASSRLS
+--create role admin_role;
+--grant select on all tables in schema public to admin_role
+--ALTER ROLE admin_role BYPASSRLS;

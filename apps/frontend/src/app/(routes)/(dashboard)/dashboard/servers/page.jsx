@@ -20,7 +20,7 @@ export default async function Servers() {
 
 	const { data } = await supabase.from("servers").select()
 	// Sanitize data
-	const sanitizedData = data.map(({ user_id, plan_id, ...rest }) => rest)
+	const sanitizedData = data.map(({ user_id, plan_id, node_id, ...rest }) => rest)
 
 	return (
 		<div className="h-full bg-cyan-900">

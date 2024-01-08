@@ -5,6 +5,8 @@ import morgan from 'morgan';
 import helmet from "helmet";
 import cookieParser from "cookie-parser"
 
+import supabaseMiddleware from './middleware/supabaseMiddleware.js';
+
 import { setupRoutes } from './routes.js';
 
 const app = express();
@@ -13,6 +15,8 @@ app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use(cookieParser())
+
+app.use(supabaseMiddleware);
 
 setupRoutes(app);
 

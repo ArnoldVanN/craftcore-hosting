@@ -1,8 +1,13 @@
-export const getServerPersistence = async ({
-    supabase,
-    serverId
-}) => {
-
-    const { data } = await supabase.from("plans").select().eq("id", serverId)
-    console.log("Request successful! " + data[0].plan_name)
-};
+export const getServerPersistence = async ({ req, serverId }) => {
+    return await req.supabase.from("servers").select().eq("id", serverId)
+        .then(({ data, error }) => {
+            if (error) {
+                throw error
+            }
+            return data[0]
+        })
+        .catch(error => {
+            console.error(error)
+            throw new Error(`Error in getServerPersistence: ${error.message}`)
+        })
+}

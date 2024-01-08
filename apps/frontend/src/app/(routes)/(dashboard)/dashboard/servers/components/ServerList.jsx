@@ -8,9 +8,10 @@ import { redirect } from "next/navigation"
 
 const columns = [
 	{ label: "NAME", key: "server_name" },
-	{ label: "IP", key: "server_ip" },
+	{ label: "IP", key: "server_hostname" },
 	{ label: "PORT", key: "server_port" },
 	{ label: "STATUS", key: "server_status" },
+	{ label: "VERSION", key: "version" },
 	{ label: "ACTIONS", key: "actions" },
 ]
 
@@ -22,7 +23,6 @@ const statusColorMap = {
 
 export default function ServerList({ servers }) {
 	// CUSTOM CELLS
-
 	const renderCell = React.useCallback((server, columnKey) => {
 		const cellValue = server[columnKey]
 
@@ -69,7 +69,10 @@ export default function ServerList({ servers }) {
 					</TableColumn>
 				)}
 			</TableHeader>
-			<TableBody items={servers}>{(item) => <TableRow key={item.id}>{(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}</TableRow>}</TableBody>
+			// TODO replace with custom component with link to plans
+			<TableBody emptyContent={"You currently don't own any servers."} items={servers}>
+				{(item) => <TableRow key={item.id}>{(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}</TableRow>}
+			</TableBody>
 		</Table>
 	)
 }
